@@ -380,9 +380,13 @@ class Simulation(object):
             # in the wired case that money is less than what has been returned by the sender,
             # throw an error message
             if money < (-tm_sender.money):
-                raise ValueError("%f was requested from account '%s' but %f returned" % (money,
-                                                                                         payment['from_acc'].name,
-                                                                                         -tm_sender.money))
+                # if payment is fixed, throw an error, otherwise proceed
+                if payment['fixed']:
+                    raise ValueError("%f was requested from account '%s' but %f returned" % (money,
+                                                                                             payment['from_acc'].name,
+                                                                                             -tm_sender.money))
+                else:
+                    money = -tm_sender.money
             if money > (-tm_sender.money):
                 # if payment is fixed, throw an error, otherwise proceed
                 if payment['fixed']:
