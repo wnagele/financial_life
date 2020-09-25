@@ -555,7 +555,7 @@ class Payment(object):
                      'kind': kind,
                      'payment': payment,
                      'fixed': fixed,
-                     'meta': meta
+                     'meta': deepcopy(meta)
                      }
 
     @property
